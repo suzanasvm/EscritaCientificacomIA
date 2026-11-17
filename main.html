@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guia de Artigo de Revisão Sistemática com IA e Termo CNPq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--pr:#00703b;--prd:#003e20;--prc:#e8f5e9;--onprc:#003319;--bg:#fff;--s1:#f9fbf9;--s2:#f0f4f1;--s3:#e2eae3;--ink:#0f1715;--ink2:#4a5550;--ol:#cbd5ce;--wn:#fef3c7;--onwn:#78350f;--pu:#f3e8ff;--onpu:#5b21b6;--code:#0f1715;--oncode:#e8f5e9;--fh:'Public Sans',system-ui,sans-serif;--fm:'JetBrains Mono',monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pr:#4ade80;--prd:#bbf7d0;--prc:#12301f;--onprc:#d1fae5;--bg:#0b1210;--s1:#101a16;--s2:#16231d;--s3:#1f3128;--ink:#ecf3ef;--ink2:#a7b5ae;--ol:#2c4137;--wn:#3a2a08;--onwn:#fde68a;--pu:#2a1b4a;--onpu:#d8b4fe;--code:#050a08;--oncode:#d1fae5}}
+:root[data-theme="dark"]{--pr:#4ade80;--prd:#bbf7d0;--prc:#12301f;--onprc:#d1fae5;--bg:#0b1210;--s1:#101a16;--s2:#16231d;--s3:#1f3128;--ink:#ecf3ef;--ink2:#a7b5ae;--ol:#2c4137;--wn:#3a2a08;--onwn:#fde68a;--pu:#2a1b4a;--onpu:#d8b4fe;--code:#050a08;--oncode:#d1fae5}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px);overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font:clamp(1rem,.95rem + .2vw,1.07rem)/1.68 var(--fh);overflow-x:clip}
+a{color:var(--pr);font-weight:600}
+.app{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1400px;margin:0 auto}
+.side{background:var(--s1);border-right:1px solid var(--ol);padding:1.2rem 1rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.badge,.tag{display:inline-block;background:var(--prc);color:var(--onprc);font:700 .72rem var(--fm);padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.st{font-size:1.05rem;font-weight:800;color:var(--prd);margin:.4rem 0 .8rem;line-height:1.25;border-bottom:2px solid var(--pr);padding-bottom:.6rem}
+.prog{border:1px solid var(--ol);border-radius:6px;padding:.5rem .8rem;margin-bottom:.8rem;font:500 .75rem var(--fm)}
+.bar{height:8px;background:var(--s2);border-radius:9px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;width:0;background:var(--pr);transition:width .3s}
+.nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.nav a{display:block;padding:7px 10px;border-left:3px solid transparent;border-radius:6px;color:var(--ink2);text-decoration:none;font-size:.85rem}
+.nav a:hover{background:var(--s2)}.nav a.on{background:var(--prc);color:var(--onprc);border-left-color:var(--pr);font-weight:800}
+main{padding:2rem clamp(1rem,4vw,3.5rem);max-width:1000px;min-width:0}
+.hero{border-top:6px solid var(--pr);padding-top:1.2rem;margin-bottom:2.5rem}
+h1{font-size:clamp(2rem,1.5rem + 2.2vw,3rem);font-weight:900;line-height:1.15;letter-spacing:-.02em;margin:.6rem 0 1rem}
+h2{font-size:clamp(1.4rem,1.1rem + 1.1vw,1.9rem);font-weight:900;margin:.5rem 0;color:var(--prd)}
+.lead{color:var(--ink2);max-width:72ch}
+.rule{background:var(--prc);border-left:5px solid var(--pr);padding:1rem 1.3rem;border-radius:0 10px 10px 0;color:var(--onprc)}
+.sec{margin:0 0 3.5rem;padding-top:1.2rem;border-top:1px solid var(--ol);scroll-margin-top:1rem}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:.8rem 0}
+.chip{border:2px solid var(--pr);border-radius:9999px;padding:3px 14px;text-decoration:none;font-size:.88rem;box-shadow:0 2px 0 var(--pr)}.chip:hover{background:var(--prc)}
+.card{border:1px solid var(--ol);border-radius:10px;padding:1.1rem 1.2rem;margin:1.2rem 0;background:var(--s1)}
+.card h3{margin:0 0 .3rem;font-size:1.1rem}
+.warn{background:var(--wn);color:var(--onwn);border-left:5px solid #b45309;padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:.8rem 0;font-size:.95rem}
+label{display:block;font-weight:800;margin:.9rem 0 .2rem;font-size:.95rem}
+.hint{font-size:.85rem;color:var(--ink2);margin:0 0 .3rem}
+textarea,input[type=text],input[type=date],select{width:100%;font:inherit;font-size:.95rem;padding:.55rem .7rem;border:2px solid var(--ol);border-radius:6px;background:var(--bg);color:var(--ink)}
+textarea{min-height:76px;resize:vertical}
+textarea:focus,input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid #ffdd00;outline-offset:1px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 1rem}
+.pbox{background:var(--code);border-radius:10px;overflow:hidden;margin:1rem 0}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:.5rem .9rem;background:var(--pu);color:var(--onpu);font-size:.85rem}
+.cp{font:700 .75rem var(--fm);border:0;border-radius:6px;background:var(--pr);color:var(--bg);padding:6px 12px;cursor:pointer;box-shadow:0 3px 0 var(--prd)}
+pre{margin:0;padding:1rem;white-space:pre-wrap;word-break:break-word;font:500 .85rem/1.6 var(--fm);color:var(--oncode);max-height:380px;overflow:auto}
+.chk{display:grid;gap:6px;margin-top:1rem}.chk label{display:flex;gap:10px;align-items:flex-start;font-weight:600;margin:0;padding:.5rem .8rem;border:1px solid var(--ol);border-radius:6px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--pr);flex-shrink:0;margin-top:3px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:560px}th,td{border:1px solid var(--ol);padding:6px;text-align:left}th{background:var(--s2);font-size:.85rem}
+td input,td select{padding:.35rem .5rem}
+.ex{border-left:5px solid var(--pr);background:var(--s2);padding:.7rem 1rem;border-radius:0 8px 8px 0;font-size:.95rem;margin:.8rem 0}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--ol)}.nav{flex-direction:row;overflow-x:auto}.nav a{white-space:nowrap}}
+.how{list-style:none;margin:1.4rem 0 0;padding:0;display:grid;gap:14px;counter-reset:s}
+.stp{counter-increment:s;position:relative;border:1px solid var(--ol);border-radius:12px;padding:1rem 1.2rem 1.1rem 3.8rem;background:var(--bg);min-width:0}
+.stp::before{content:counter(s);position:absolute;left:1rem;top:.85rem;width:34px;height:34px;border-radius:50%;background:var(--pr);color:var(--bg);display:grid;place-items:center;font:800 1rem var(--fh)}
+.stp h3{margin:.25rem 0 .4rem;font-size:1.08rem}
+.stp label{margin:.7rem 0 .2rem}.stp .tools{margin:.5rem 0 0}
+.think{background:var(--pu);color:var(--onpu);border-radius:10px;padding:.9rem 1.2rem;margin:1rem 0}.think ul{margin:.4rem 0 0;padding-left:1.2rem}.think li{margin:.2rem 0}
+details.insp{border:2px dashed var(--pr);border-radius:10px;margin:1rem 0;background:var(--s1)}details.insp summary{cursor:pointer;padding:.75rem 1rem;font-weight:800;color:var(--prd)}details.insp>div{padding:0 1rem 1rem}
+details.insp .pbox{margin:.6rem 0}
+@media(max-width:600px){.stp{padding-left:1.2rem;padding-top:3.2rem}.stp::before{top:.8rem}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<span class="badge">Revisão sistemática</span>
+<h2 class="st">Guia de Artigo de Revisão Sistemática com IA</h2>
+<div class="prog">Progresso: <span id="pt">0%</span><div class="bar"><i id="pf"></i></div></div>
+<ul class="nav" id="nav"></ul>
+</aside>
+<main>
+<header class="hero">
+<span class="tag">MINICURSO SIC - 2026 • Uso Ético e Eficiente de Inteligência Artificial na Pesquisa Científica</span>
+<span class="tag">Edição Interativa • Gerada com Notebook LM + Claude</span>
+<span class="tag">Sob a supervisão e revisão dos Prof.ª Suzana Mota e Prof. Maycon Magalhães</span>
+
+<h1>Construa sua revisão sistemática com apoio de IA</h1>
+<p class="lead">Se você nunca escreveu um artigo, respire: todo mundo começou sem saber como. Uma revisão sistemática é uma investigação organizada. Pense em um detetive: ele não inventa a resposta, ele coleta pistas de forma ordenada e conta ao leitor como fez, para que qualquer pessoa possa repetir o caminho. Você não precisa descobrir nada novo.</p>
+<div class="think"><b>Como usar este guia</b><ul>
+<li>São 9 etapas. Em cada uma você segue uns poucos passos numerados, um de cada vez.</li>
+<li>Cada caixa pede <b>uma única coisa</b>. Se estiver em dúvida, leia a dica logo abaixo do título da caixa.</li>
+<li>Antes de escrever, leia o quadro roxo “Pense e pergunte-se”. Ele mostra o raciocínio por trás da etapa.</li>
+<li>A caixinha “Quer se inspirar?” é opcional e começa fechada. Abra só se quiser ver um exemplo pronto.</li>
+<li>Tudo que você escreve fica salvo neste navegador, e no final você baixa todas as etapas em um único documento Word.</li>
+</ul></div>
+<div class="rule" style="margin-top:1rem"><b>Regra de ouro:</b> a primeira versão é sua. A IA sugere, você confere. Nunca cite um estudo que você não abriu e leu, e declare o uso de IA no seu artigo.</div>
+</header>
+<div id="cycle"></div>
+
+<section class="sec" id="sx_cnpq" data-nav="10. Termo CNPq">
+<span class="tag">Portaria CNPq nº 2.664/2026</span>
+<h2>Termo de Uso de IA e Integridade Científica</h2>
+<p class="lead">Preencha seus dados para estruturar a declaração oficial e a tabela de rastreabilidade do uso de inteligência artificial em conformidade com as boas práticas científicas.</p>
+<div class="card">
+<label for="autor_nome">Nome do Pesquisador</label>
+<input type="text" id="autor_nome" data-k="autor_nome" placeholder="Ex.: Maria da Silva">
+
+<label for="instituicao_afiliacao">Instituição</label>
+<input type="text" id="instituicao_afiliacao" data-k="instituicao_afiliacao" placeholder="Ex.: Universidade Federal">
+
+<div class="pbox" style="margin-top:1.2rem">
+<div class="ph"><b>Prévia da Declaração (Portaria CNPq nº 2.664/2026)</b><button class="cp" data-c="termo_preview">Copiar Termo</button></div>
+<pre id="termo_preview"></pre>
+</div>
+</div>
+</section>
+
+<section class="sec" id="sx" data-nav="11. Salvar documento"><span class="tag">Etapa final</span><h2>Salve seu documento Word</h2><p class="lead">O arquivo reúne todas as etapas, contendo as suas versões iniciais, melhoradas, prompts, ferramentas e a Declaração de Uso de IA com tabela em um único arquivo organizado.</p><div class="warn">Etapas que você deixou em branco aparecerão no documento como “não preenchido”.</div><p><button class="cp" id="bd" style="font-size:.9rem;padding:10px 16px">Baixar todas as etapas em Word (.docx)</button> <button class="cp" id="bc" style="font-size:.9rem;padding:10px 16px">Copiar tudo como texto</button></p><p class="hint" id="xs" role="status"></p></section>
+<footer class="rule"><b>Para o artigo:</b> registre a string final, a data da busca e a base. Inclua a declaração de uso de IA, informando ferramenta, finalidade e que todo o conteúdo foi conferido por você.</footer>
+</main>
+</div>
+<script>
+const GPT=["ChatGPT","https://chatgpt.com"],GEM=["Gemini","https://gemini.google.com"],CLA=["Claude","https://claude.ai"],SCI=["SciSpace","https://typeset.io"],NLM=["NotebookLM","https://notebooklm.google.com"],ELI=["Elicit","https://elicit.com"],CON=["Consensus","https://consensus.app"];
+const TPL={};
+const IN=(id,q,ph)=>`<label for="${id}">${q}</label><input type="text" id="${id}" data-k="${id}" placeholder="${ph}">`;
+
+const toolTrackerHtml = (n) => `
+<div class="grid" style="grid-template-columns: 2fr 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
+  <div>
+    <label for="tool_select_${n}">Ferramenta padrão:</label>
+    <select id="tool_select_${n}" data-k="tool_select_${n}" onchange="handleToolSelect(${n})">
+      <option value="">Selecione ou insira abaixo...</option>
+      <option value="ChatGPT">ChatGPT</option>
+      <option value="Gemini">Gemini</option>
+      <option value="Claude">Claude</option>
+      <option value="Elicit">Elicit</option>
+      <option value="SciSpace">SciSpace</option>
+      <option value="NotebookLM">NotebookLM</option>
+      <option value="Consensus">Consensus</option>
+      <option value="Outra / Personalizada">Outra / Personalizada</option>
+    </select>
+  </div>
+  <div>
+    <label for="tool_version_${n}">Versão (opcional):</label>
+    <input type="text" id="tool_version_${n}" data-k="tool_version_${n}" placeholder="Ex.: GPT-4o">
+  </div>
+  <div>
+    <label for="tool_date_${n}">Data:</label>
+    <input type="date" id="tool_date_${n}" data-k="tool_date_${n}">
+  </div>
+</div>
+<label for="tool_custom_${n}" style="margin-top:0.4rem">Nome da ferramenta / serviço utilizado:</label>
+<input type="text" id="tool_custom_${n}" data-k="tool_custom_${n}" placeholder="Ex.: ChatGPT, Claude, etc.">
+<p class="hint">Portaria CNPq nº 2.664/2026: registre a ferramenta de IA empregada como apoio nesta etapa.</p>
+`;
+
+const STEPS=[
+{t:"Delimitar a pesquisa",tl:[GPT,GEM,CLA],
+why:"Imagine que você quer pescar. Jogar a rede no oceano inteiro traz peixe, bota velha e tubarão. Delimitar é escolher o lago. Nesta etapa você decide exatamente o que vai estudar, e isso orienta todo o resto.",
+think:["O que é o PRISMA? É um padrão internacional de transparência (um roteiro de passos) que diz exatamente o que você precisa relatar para que sua pesquisa seja confiável.","Eu quero estudar um assunto inteiro ou só um pedaço dele?","Quem são as pessoas, o que quero investigar e em qual lugar ou situação?","Minha pergunta pode ser respondida lendo estudos já publicados, sem pesquisa de campo?"],
+ex:`<p><b>Tema grande demais:</b> “gamificação na educação”. <b>Tema delimitado:</b> gamificação no ensino de lógica de programação em cursos de tecnologia.</p>`,
+before:[{t:"Responda 6 perguntinhas, uma em cada caixa",h:`<p class="hint">Respostas curtas bastam. Elas servem de matéria-prima para o prompt.</p>`+IN('tema','Sobre qual assunto geral você quer escrever?','Ex.: gamificação no ensino')+IN('po','Quem você quer estudar?','Ex.: estudantes de cursos de tecnologia')+IN('in','O que você quer investigar nessas pessoas?','Ex.: o uso de gamificação')+IN('co','Em que lugar ou situação isso acontece?','Ex.: aulas de lógica de programação')+IN('de','O que você espera observar como resultado?','Ex.: efeitos na aprendizagem e no engajamento')+IN('jan','Qual período e quais idiomas você vai considerar?','Ex.: 2019 a 2026, português e inglês')}],
+il:"Escreva a sua pergunta norteadora",ih:"Uma frase só, que junte as respostas das caixas acima. Pode ficar imperfeita: a IA vai ajudar a lapidar.",
+p:"Atue como metodologista de revisão sistemática (PRISMA 2020).\nTema: {tema}\nQuem estudo: {po}\nO que investigo: {in}\nEm que contexto: {co}\nO que espero observar: {de}\nPeríodo e idiomas: {jan}\nMinha pergunta norteadora inicial: {ini}\n\n1) Diga, em linguagem simples, se meu tema está amplo ou estreito demais.\n2) Sugira 5 formas de delimitar melhor.\n3) Me traga instigações que me ajudem a propor a pergunta norteadora no formato PICo (Population, Interest, Context).\n4) Sugira critérios de inclusão e exclusão.\nNão invente referências. Não ofereça a resposta pronta em nenhum momento: explique os conceitos e ajude-me a pensar e construir uma proposta sozinho.",
+v:["A pergunta cabe em uma frase","Eu entendo todas as palavras que ela usa","Dá para respondê-la lendo estudos publicados"],
+ml:"Cole a pergunta norteadora final",mh:"Escolha uma das versões sugeridas e ajuste com as suas palavras."},
+
+{t:"Estruturar a escrita",tl:[GPT,GEM,CLA],
+why:"Antes de construir uma casa, desenha-se a planta. O esqueleto do artigo é essa planta: você sabe onde cada coisa vai ficar antes de escrever qualquer linha.",
+think:["Qual é a ordem lógica: contexto, método, o que encontrei, o que significa?","O que cada seção precisa ter para o leitor entender?","O que eu ainda não sei e só vou saber depois de analisar os estudos?"],
+ex:`<p><b>Introdução:</b> por que lógica de programação é difícil; o que é gamificação; objetivo do artigo.</p>`,
+il:"Liste os tópicos que você acha que o artigo precisa ter",ih:"Um tópico por linha, de 3 a 5 linhas. Não se preocupe com a ordem nem com o jeito de escrever.",
+p:"Você é orientador de revisão sistemática (PRISMA 2020).\nMinha pergunta norteadora: {pergunta}\nTópicos que acho importantes: {ini}\n\nMonte o esqueleto do artigo com 2 a 3 tópicos por seção (Introdução, Método, Resultados, Discussão, Conclusão). Marque o que depende de dados que ainda não tenho. Não preencha resultados.",
+v:["Há uma seção para Introdução, Método, Resultados, Discussão e Conclusão","A IA não inventou nenhum resultado","Anotei o que só poderei escrever depois de analisar os estudos"],
+ml:"Cole o esqueleto final do artigo",mh:"Pode ser a versão da IA com os ajustes que você fez."},
+
+{t:"Buscar artigos",tl:[[CON,"https://consensus.app"],ELI,SCI],
+why:"A string de busca é a fórmula matemática (combinação de palavras-chave com conectivos como AND e OR) que você digita nas bases de dados científicas para pescar exatamente os artigos certos.",
+think:["Que palavras diferentes as pessoas usam para falar do mesmo assunto, em português e em inglês?","Quais conceitos precisam aparecer juntos no mesmo estudo?","Os 5 primeiros resultados realmente falam do meu assunto?"],
+ex:`<p>Cada parêntese é um conceito.</p>`,
+before:[{t:"Monte a string, uma caixa por conceito",h:`<p class="hint">Escreva palavras parecidas separadas por vírgula, em português e em inglês. A string aparece pronta logo abaixo.</p>`+IN('b1','Que palavras descrevem QUEM você estuda?','estudantes, alunos, students')+IN('b2','Que palavras descrevem O QUE você investiga?','gamificação, gamification')+IN('b3','Que palavras descrevem ONDE ou em qual contexto?','lógica de programação, programming logic, algoritmos')+`<label for="db">Em qual base você vai buscar?</label><select id="db" data-k="db"><option value="gen">Ainda não sei (genérica)</option><option value="scopus">Scopus</option><option value="wos">Web of Science</option><option value="pubmed">PubMed</option></select><div class="pbox"><div class="ph"><b>String gerada</b><button class="cp" data-c="so">Copiar</button></div><pre id="so"></pre></div>`}],
+il:"Cole aqui a string gerada no passo 1",ih:"Copie a caixa “String gerada” e cole aqui. É a sua versão inicial da busca.",
+p:"Atue como bibliotecário especialista em revisões sistemáticas.\nMinha pergunta: {pergunta}\nMinha string inicial: {ini}\nBase de dados: {db}\n\n1) Sugira sinônimos, variações em inglês e português, termos controlados (DeCS ou MeSH) e truncamentos com *.\n2) Monte a string final com OR dentro dos blocos e AND entre eles.\n3) Entregue uma versão para cada base: Scopus, Web of Science, PubMed e SciELO.\n4) Aponte termos que podem trazer ruído.\nExplique cada escolha em uma frase.",
+v:["A IA sugeriu termos novos e eu escolhi só os que fazem sentido","Escolhi a base em que vou buscar","Anotei a data em que fiz a busca"],
+after:[{t:"Teste com os 5 primeiros resultados",h:`<p>Rode a string e anote os 5 primeiros resultados de cada ferramenta.</p><div class="warn">Abra cada estudo e confira se o DOI e os autores existem.</div><div class="tw"><table><thead><tr><th>#</th><th>Título</th><th>Ano</th><th>Decisão</th></tr></thead><tbody id="f5"></tbody></table></div><div class="pbox"><div class="ph"><b>Prompt de triagem do piloto</b><button class="cp" data-c="pf5">Copiar</button></div><pre id="pf5" data-p="1"></pre></div>`},
+{t:"Peça estudos reais a uma ferramenta de busca com IA",h:`<p>Consensus, Elicit e SciSpace buscam artigos de verdade.</p><div class="pbox"><div class="ph"><b>Prompt para buscar estudos</b><button class="cp" data-c="pl">Copiar</button></div><pre id="pl" data-p="1"></pre></div>`}],
+xp:[["Prompt de triagem do piloto","pf5"],["Prompt para buscar estudos","pl"]],
+ml:"Cole a string de busca final",mh:"Depois do teste dos 5 primeiros e dos ajustes que você fez.",pl0:"Prompt para ampliar a string"},
+
+{t:"Organizar PDFs",tl:[["ChatPDF","https://www.chatpdf.com"],NLM,SCI],
+why:"Pense no PDF como um livro e na IA como um colega que leu só aquele livro.",
+think:["O que eu preciso saber sobre este estudo?","Se a resposta não estiver no texto, a IA vai admitir ou inventar?"],
+ex:`<p><b>Uma pergunta boa:</b> “Qual elemento de gamificação foi usado neste estudo e como a aprendizagem foi medida?”</p>`,
+il:"Escreva UMA pergunta que você quer fazer ao PDF",ih:"Só uma. Quando precisar de outra, volte aqui e repita as etapas.",
+p:"Vou enviar um PDF. Minha pergunta é: {ini}\n\nResponda com base apenas no PDF enviado. Cite a página de cada informação. Se algo não estiver no texto, escreva “não consta”.",
+v:["Abri a página que a IA citou","A resposta bate com o texto original","Quando faltava dado, a IA escreveu “não consta”"],
+ml:"Cole a resposta que você conferiu",mh:"Só o que você viu no PDF e confirmou."},
+
+{t:"Fichar artigos",tl:[NLM,ELI,SCI],
+why:"Fichar é preencher a mesma ficha de cadastro para cada estudo.",
+think:["Que informações preciso de cada estudo para responder aos meus objetivos específicos?"],
+ex:`<p>Modelo com colchetes para preencher...</p>`,
+il:"Escolha UM artigo e escreva 3 coisas sobre ele",ih:"Uma linha para cada: quantas pessoas participaram, qual foi o método e qual foi o principal resultado.",
+p:"Esta é a ficha que preenchi sozinho para um artigo: {ini}\n\nCompare com o PDF e preencha a mesma ficha: autor e ano, país, desenho do estudo, amostra, intervenção, desfecho, principal resultado e limitações. Use somente o texto do PDF e escreva “não consta” quando faltar dado.",
+v:["Conferi cada número no PDF","Usei os mesmos campos em todos os artigos","Escrevi “não consta” onde faltava dado"],
+ml:"Cole a ficha final deste artigo",mh:"A versão conferida, com os campos corrigidos."},
+
+{t:"Analisar dados",tl:[["ATLAS.ti","https://atlasti.com"],["Google Colab","https://colab.research.google.com"],SCI],
+why:"Agora você tem várias fichas. Analisar é arrumar a mesa.",
+think:["O que eu quero contar ou agrupar?"],
+ex:`<p>“Vou contar quantos estudos usam cada elemento e agrupar os efeitos relatados.”</p>`,
+il:"Escreva em uma ou duas frases como pretende analisar",ih:"Diga o que vai contar e o que vai agrupar.",
+p:"Minha ideia de análise dos dados extraídos: {ini}\n\nSugira se a síntese deve ser narrativa ou temática, proponha categorias de análise e escreva código em Python (pandas) que gere frequências por ano, país e desenho de estudo. Explique cada linha do código em linguagem simples.",
+v:["Entendi cada linha do código ou cada categoria","Rodei a análise eu mesmo e os números batem com as fichas","Estou só descrevendo, sem interpretar ainda"],
+ml:"Cole a descrição final da sua análise",mh:"O que você realmente vai fazer, já ajustado."},
+
+{t:"Escrever",tl:[GPT,CLA],
+why:"A primeira versão é sua. A IA entra depois como um leitor atento.",
+think:["Estou escrevendo o que os dados mostram (resultados) ou o que eles significam (discussão)?"],
+ex:`<p><b>Exemplo de parágrafo de método...</b></p>`,
+il:"Escreva um único parágrafo de uma seção do artigo, do seu jeito",ih:"Escolha a seção mais fácil, como o método.",
+p:"Escrevi este parágrafo:\n{ini}\n\nSem reescrever, aponte lacunas no argumento, afirmações sem fonte e sugestões de ordem das ideias. Não crie citações nem resultados.",
+v:["A primeira versão foi escrita por mim","Resultados descrevem e a discussão interpreta","A IA não criou nenhuma citação"],
+ml:"Cole o parágrafo melhorado",mh:"A sua versão final, depois de aplicar só as sugestões com as quais concorda."},
+
+{t:"Formatar referências",tl:[["Zotero","https://www.zotero.org"],["Mendeley","https://www.mendeley.com"],["MyBib","https://www.mybib.com"]],
+why:"Referências são os créditos do filme. Cada fonte precisa ser real.",
+think:["Eu abri e li cada fonte que vou citar?"],
+ex:`<p>Modelo ABNT genérico...</p>`,
+il:"Cole UMA referência exatamente como você a tem hoje",ih:"Do jeito que está, mesmo bagunçada.",
+p:"Formate esta referência em ABNT: {ini}\nAponte os campos ausentes. Não complete dados que eu não forneci.",
+v:["Conferi a referência na fonte original","O padrão escolhido é o da minha instituição","A citação no texto bate com a lista"],
+ml:"Cole a referência formatada",mh:"A versão conferida por você."},
+
+{t:"Revisar",tl:[["Clarice.ai","https://clarice.ai"],GPT,CLA],
+why:"Revisar é limpar o vidro: o conteúdo é o mesmo, mas fica mais fácil de enxergar.",
+think:["A sugestão mudou o que eu quis dizer?"],
+ex:`<p><b>Antes e depois...</b></p>`,
+il:"Cole o parágrafo que você quer revisar",ih:"Pode ser o mesmo da etapa de escrita.",
+p:"Revise gramática e clareza do trecho abaixo, mantendo meu estilo e o sentido original. Liste cada alteração em uma tabela com original, sugestão e motivo.\n{ini}",
+v:["Aceitei só as alterações com as quais concordo","O sentido do meu texto continua o mesmo","Incluí a declaração de uso de IA"],
+ml:"Cole o parágrafo final",mh:"Com as alterações que você aceitou."}];
+
+STEPS.forEach((s,n)=>TPL['p'+n]=s.p);
+TPL.pf5="Critérios de inclusão e exclusão: [COLE AQUI OS CRITÉRIOS]\nPergunta: {pergunta}\nAbaixo estão título e resumo de 5 estudos. Para cada um, diga INCLUIR, EXCLUIR ou DÚVIDA, citando o critério que justifica. Use apenas o texto fornecido.\n[COLE OS 5 RESUMOS]";
+TPL.pl="Minha pergunta norteadora: {pergunta}\n\nListe estudos reais que respondem a esta pergunta, com autores, ano, periódico e DOI. Indique o desenho de cada estudo. Se não tiver certeza de que um estudo existe, avise.";
+
+let S={};try{S=JSON.parse(localStorage.getItem('revsis-v6')||'{}')}catch(e){}
+
+// Pré-preencher data de hoje caso não exista no state para cada etapa
+const hojeIso = new Date().toISOString().split('T')[0];
+STEPS.forEach((s,n) => {
+  if(!S['tool_date_'+n]) {
+    S['tool_date_'+n] = hojeIso;
+  }
+});
+
+const save=()=>{try{localStorage.setItem('revsis-v6',JSON.stringify(S))}catch(e){}};
+const stp=(t,h)=>`<li class="stp"><h3>${t}</h3>${h}</li>`;
+const pb=(id,l,s)=>`<div class="pbox"><div class="ph"><b>${l}</b><button class="cp" data-c="${id}">Copiar</button></div><pre id="${id}" data-p="1" data-s="${s}"></pre></div>`;
+const cy=document.getElementById('cycle');
+
+STEPS.forEach((s,n)=>{
+const it=[];
+(s.before||[]).forEach(x=>it.push(stp(x.t,x.h)));
+it.push(stp('Escreva a sua versão inicial',`<label for="ini${n}">${s.il}</label><p class="hint">${s.ih}</p><textarea id="ini${n}" data-k="ini${n}"></textarea>`));
+it.push(stp('Copie o prompt',`<p class="hint">O prompt já leva o que você escreveu no passo anterior. Se aparecer algo entre colchetes, volte e preencha a caixa correspondente.</p>${pb('p'+n,s.pl0||'Prompt para copiar',n)}`));
+it.push(stp('Cole o prompt em uma ferramenta de IA',`<p>Abra uma das ferramentas, cole o prompt e envie. Leia a resposta com calma, sem pressa.</p><div class="tools">${s.tl.map(t=>`<a class="chip" href="${t[1]}" target="_blank" rel="noopener">${t[0]} ↗</a>`).join('')}</div>`));
+it.push(stp('Informe a ferramenta utilizada nesta etapa (Portaria CNPq nº 2.664/2026)', toolTrackerHtml(n)));
+it.push(stp('Confira a resposta antes de aceitar',`<p class="hint">Marque cada item só depois de fazer a conferência.</p><div class="chk">${s.v.map((c,j)=>`<label><input type="checkbox" data-k="ck${n}_${j}" data-ck>${c}</label>`).join('')}</div>`));
+(s.after||[]).forEach(x=>it.push(stp(x.t,x.h)));
+it.push(stp('Cole a versão melhorada',`<label for="mel${n}">${s.ml}</label><p class="hint">${s.mh}</p><textarea id="mel${n}" data-k="mel${n}"></textarea>`));
+it.push(stp('Se você mudou o prompt, cole o que usou (opcional)',`<textarea id="pu${n}" data-k="pu${n}" aria-label="Prompt que você usou"></textarea><p class="hint">Se deixar em branco, o documento Word usa o prompt de exemplo.</p>`));
+cy.insertAdjacentHTML('beforeend',`<section class="sec" id="s${n}" data-nav="${String(n+1).padStart(2,'0')}. ${s.t}"><span class="tag">Etapa ${n+1} de 9</span><h2>${s.t}</h2><p class="lead">${s.why}</p><div class="think"><b>Pense e pergunte-se antes de começar</b><ul>${s.think.map(q=>`<li>${q}</li>`).join('')}</ul></div><details class="insp"><summary>💡 Quer se inspirar? Veja um exemplo (opcional)</summary><div><p class="hint">Exemplo com o tema “gamificação no ensino de lógica de programação”. Use só como inspiração: o seu tema é outro, e isso é ótimo.</p>${s.ex}</div></details><ol class="how">${it.join('')}</ol></section>`)});
+
+const f5=document.getElementById('f5');
+for(let i=1;i<=5;i++)f5.insertAdjacentHTML('beforeend',`<tr><td>${i}</td><td><input type="text" aria-label="Título ${i}" data-k="ft${i}"></td><td><input type="text" aria-label="Ano ${i}" data-k="fa${i}" style="width:80px"></td><td><select aria-label="Decisão ${i}" data-k="fd${i}"><option value="">Escolher</option><option>Incluir</option><option>Excluir</option><option>Dúvida</option></select></td></tr>`);
+
+document.querySelectorAll('[data-k]').forEach(e=>{
+const v=S[e.dataset.k];
+if(v!==undefined){
+if(e.type==='checkbox')e.checked=!!v;
+else e.value=v;
+} else if(e.type==='date' && !e.value) {
+e.value = hojeIso;
+S[e.dataset.k] = hojeIso;
+}
+});
+
+function handleToolSelect(n){
+const sel = document.getElementById('tool_select_' + n);
+const custom = document.getElementById('tool_custom_' + n);
+if(sel && custom && sel.value && sel.value !== 'Outra / Personalizada'){
+custom.value = sel.value;
+S['tool_custom_' + n] = sel.value;
+save();
+refresh();
+}
+}
+
+const FB={ini:'COLE AQUI A SUA VERSÃO INICIAL',pergunta:'SUA PERGUNTA NORTEADORA, DA ETAPA 1',tema:'ASSUNTO GERAL',po:'QUEM VOCÊ ESTUDA',in:'O QUE INVESTIGA',co:'CONTEXTO',de:'DESFECHO',jan:'PERÍODO E IDIOMAS'};
+const fill=(t,s)=>t.replace(/\{(\w+)\}/g,(m,k)=>{if(k==='db')return S.db||'genérica';let v=k==='ini'?S['ini'+s]:k==='pergunta'?(S.mel0||S.ini0):S[k];v=(v||'').trim();return v||'['+(FB[k]||k.toUpperCase())+']'});
+const mk=(v,db)=>{const t=v.split(',').map(x=>x.trim()).filter(Boolean).map(x=>{x=/\s/.test(x)?`"${x}"`:x;return db==='pubmed'?x+'[tiab]':x});return t.length?'('+t.join(' OR ')+')':''};
+
+function generateCNPqTerm(){
+const nome = (S['autor_nome'] || '[Nome do Pesquisador]').trim();
+const af = (S['instituicao_afiliacao'] || '[Instituição]').trim();
+
+let detailsText = [];
+STEPS.forEach((s, n) => {
+let toolName = (S['tool_custom_' + n] || S['tool_select_' + n] || 'Não informada');
+let toolVer = (S['tool_version_' + n] || 'Não informada');
+let toolDate = (S['tool_date_' + n] || hojeIso);
+let promptUsed = (document.getElementById('p'+n) ? document.getElementById('p'+n).textContent : 'Prompt padrão');
+if(S['pu'+n]) promptUsed = S['pu'+n];
+
+detailsText.push(`[Etapa ${n+1}: ${s.t}]
+- Ferramenta: ${toolName}
+- Versão: ${toolVer}
+- Data: ${toolDate}
+- Objetivo: Apoio na etapa metodológica de ${s.t.toLowerCase()}
+- Prompt: ${promptUsed.trim()}
+--------------------------------------------------`);
+});
+
+return `DECLARAÇÃO DE USO DE INTELIGÊNCIA ARTIFICIAL E INTEGRIDADE CIENTÍFICA
+(Em conformidade com a Portaria CNPq nº 2.664/2026)
+
+Eu, ${nome}, vinculado(a) à instituição ${af}, declaro para os devidos fins de integridade, transparência e boas práticas na atividade científica que o presente trabalho de revisão sistemática utilizou ferramentas de inteligência artificial de forma auxiliar e subsidiária, conforme detalhamento a seguir:
+
+TABELA DE RASTREABILIDADE DO USO DE IA:
+${detailsText.join('\n')}
+
+Declaro expressamente que:
+1. Todo o conteúdo gerado por inteligência artificial foi rigorosamente auditado, validado e conferido por mim frente às fontes bibliográficas originais.
+2. A responsabilidade intelectual, o rigor metodológico e a autoria integral do texto final e de suas conclusões pertencem exclusivamente a mim, assumindo total responsabilidade perante a comunidade acadêmica e as diretrizes da Portaria CNPq nº 2.664/2026.`;
+}
+
+function refresh(){
+const V=k=>(S[k]||'').trim();
+document.querySelectorAll('pre[data-p]').forEach(p=>{p.textContent=fill(TPL[p.id],p.dataset.s)});
+const db=V('db')||'gen';let j=['b1','b2','b3'].map(k=>mk(V(k),db)).filter(Boolean).join(' AND ');
+if(j){if(db==='scopus')j='TITLE-ABS-KEY('+j+')';if(db==='wos')j='TS=('+j+')'}
+document.getElementById('so').textContent=j||'Preencha as caixas acima para gerar a string.';
+const ck=[...document.querySelectorAll('[data-ck]')];const pc=Math.round(100*ck.filter(c=>c.checked).length/ck.length);
+document.getElementById('pt').textContent=pc+'%';document.getElementById('pf').style.width=pc+'%';
+
+const termoEl = document.getElementById('termo_preview');
+if(termoEl) termoEl.textContent = generateCNPqTerm();
+}
+
+async function clip(t){try{await navigator.clipboard.writeText(t)}catch(x){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(y){}a.remove()}}
+function flash(b,m){const o=b.textContent;b.textContent=m;setTimeout(()=>b.textContent=o,1400)}
+
+document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.k;if(!k)return;S[k]=e.target.type==='checkbox'?e.target.checked:e.target.value;save();refresh()});
+document.addEventListener('click',async e=>{const b=e.target.closest('.cp[data-c]');if(!b)return;await clip(document.getElementById(b.dataset.c).textContent);flash(b,'Copiado!')});
+
+function gather(){
+const V=k=>(S[k]||'').trim();const G=id=>document.getElementById(id).textContent;
+return STEPS.map((s,n)=>{
+const p=[{label: s.pl0||'Prompt principal', text: (document.getElementById('p'+n)?document.getElementById('p'+n).textContent:'')}];
+(s.xp||[]).forEach(x=>p.push({label: x[0], text: document.getElementById(x[1])?document.getElementById(x[1]).textContent:''}));
+let info=[];
+if(n===0)info=[['Assunto','tema'],['Quem','po'],['O que investiga','in'],['Contexto','co'],['Desfecho','de'],['Período e idiomas','jan']].filter(a=>V(a[1])).map(a=>a[0]+': '+V(a[1]));
+if(n===2)info=['String gerada: '+G('so')];
+
+let toolName = V('tool_custom_'+n) || V('tool_select_'+n) || 'Não informada';
+let toolVer = V('tool_version_'+n) || 'Não informada';
+let toolDate = V('tool_date_'+n) || hojeIso;
+info.push('Ferramenta: ' + toolName + ' | Versão: ' + toolVer + ' | Data: ' + toolDate);
+
+return{
+title:(n+1)+'. '+s.t,
+info,
+ini:V('ini'+n),
+mel:V('mel'+n),
+pr:p,
+toolName,
+toolVer,
+toolDate,
+promptText: p[0].text
+}
+})}
+
+const NP='(não preenchido)';
+function toText(){
+const L=['REVISÃO SISTEMÁTICA: VERSÕES, PROMPTS E TERMO CNPq','Gerado em '+new Date().toLocaleDateString('pt-BR'),''];
+gather().forEach(g=>{
+L.push('== '+g.title+' ==');
+g.info.forEach(i=>L.push(i));
+L.push('','VERSÃO INICIAL',g.ini||NP,'','VERSÃO MELHORADA',g.mel||NP,'','PROMPTS USADOS');
+g.pr.forEach(p=>L.push(p.label+':',p.text,''));
+L.push('');
+});
+L.push(generateCNPqTerm());
+return L.join('\n');
+}
+
+async function toDocx(){
+const D = window.docx;
+if (!D) throw new Error("Biblioteca docx não carregada.");
+const ch = [];
+const para = (t, mono) => String(t).split('\n').map(l => new D.Paragraph({
+spacing: { after: 80 },
+children: [new D.TextRun({ text: l, size: mono ? 20 : 22, ...(mono ? { font: 'Consolas' } : {}) })]
+}));
+const h = (t, l) => new D.Paragraph({ text: t, heading: l });
+const H = D.HeadingLevel;
+
+ch.push(h('Revisão sistemática: todas as etapas', H.TITLE), ...para('Gerado em ' + new Date().toLocaleDateString('pt-BR')));
+
+gather().forEach(g => {
+ch.push(h(g.title, H.HEADING_1));
+g.info.forEach(i => ch.push(...para(i)));
+ch.push(h('Versão inicial', H.HEADING_2), ...para(g.ini || NP));
+ch.push(h('Versão melhorada', H.HEADING_2), ...para(g.mel || NP));
+ch.push(h('Prompts usados', H.HEADING_2));
+g.pr.forEach(p => {
+ch.push(new D.Paragraph({ children: [new D.TextRun({ text: p.label, bold: true })] }));
+ch.push(...para(p.text, true));
+});
+});
+
+ch.push(h('Declaração de Uso de IA e Integridade Científica (Portaria CNPq nº 2.664/2026)', H.HEADING_1));
+ch.push(...para(generateCNPqTerm()));
+
+ch.push(h('Tabela de Rastreabilidade de Ferramentas de IA por Etapa Metodológica', H.HEADING_2));
+const tableRows = [
+new D.TableRow({
+children: [
+new D.TableCell({ children: [new D.Paragraph({ children: [new D.TextRun({ text: "Etapa Metodológica", bold: true })] })] }),
+new D.TableCell({ children: [new D.Paragraph({ children: [new D.TextRun({ text: "Nome da Ferramenta ou Serviço", bold: true })] })] }),
+new D.TableCell({ children: [new D.Paragraph({ children: [new D.TextRun({ text: "Versão", bold: true })] })] }),
+new D.TableCell({ children: [new D.Paragraph({ children: [new D.TextRun({ text: "Data", bold: true })] })] }),
+new D.TableCell({ children: [new D.Paragraph({ children: [new D.TextRun({ text: "Objetivo", bold: true })] })] }),
+new D.TableCell({ children: [new D.Paragraph({ children: [new D.TextRun({ text: "Prompts (comandos)", bold: true })] })] }),
+],
+tableHeader: true
+})
+];
+
+gather().forEach((g) => {
+tableRows.push(new D.TableRow({
+children: [
+new D.TableCell({ children: [new D.Paragraph({ text: g.title })] }),
+new D.TableCell({ children: [new D.Paragraph({ text: g.toolName })] }),
+new D.TableCell({ children: [new D.Paragraph({ text: g.toolVer })] }),
+new D.TableCell({ children: [new D.Paragraph({ text: g.toolDate })] }),
+new D.TableCell({ children: [new D.Paragraph({ text: `Apoio metodológico na etapa ${g.title}` })] }),
+new D.TableCell({ children: [new D.Paragraph({ text: g.promptText.substring(0, 150) + '...' })] }),
+]
+}));
+});
+
+ch.push(new D.Table({
+rows: tableRows,
+width: { size: 100, type: D.WidthType.PERCENTAGE }
+}));
+
+const doc = new D.Document({ sections: [{ children: ch }] });
+return await D.Packer.toBlob(doc);
+}
+
+async function saveDoc(){
+const st = document.getElementById('xs');
+st.textContent = 'Preparando o documento Word com todas as etapas, termo CNPq e tabela estruturada...';
+try {
+const blob = await toDocx();
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'revisao-sistematica-com-termo-cnpq.docx';
+document.body.appendChild(a);
+a.click();
+a.remove();
+setTimeout(() => URL.revokeObjectURL(url), 1000);
+st.textContent = 'Documento baixado com sucesso!';
+} catch (e) {
+console.error(e);
+st.textContent = 'Não foi possível gerar o arquivo automaticamente. Use o botão “Copiar tudo” e cole no Word.';
+}
+}
+
+document.getElementById('bd').addEventListener('click', saveDoc);
+document.getElementById('bc').addEventListener('click', async e => { await clip(toText()); flash(e.currentTarget, 'Copiado!'); });
+
+const nav = document.getElementById('nav');
+const secs = [...document.querySelectorAll('section[data-nav]')];
+secs.forEach(s => nav.insertAdjacentHTML('beforeend', `<li><a href="#${s.id}" data-id="${s.id}">${s.dataset.nav}</a></li>`));
+const io = new IntersectionObserver(en => en.forEach(x => { if (x.isIntersecting) { nav.querySelectorAll('a').forEach(a => a.classList.toggle('on', a.dataset.id === x.target.id)) } }), { rootMargin: '-20% 0px -70% 0px' });
+secs.forEach(s => io.observe(s));
+refresh();
+</script>
+</body>
+</html>
